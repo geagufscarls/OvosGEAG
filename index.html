@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pragas</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding-top: 60px;
+        }
+
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: #003399;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .main-content {
+            margin-top: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-container {
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #003399;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0055cc;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .visualizacao-dados {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #003399;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registro de Pragas</h1>
+    </header>
+
+    <div class="main-content">
+        <div class="app-container">
+            <form id="pragaForm">
+                <div class="form-group">
+                    <label for="nomePragueiro">Nome do Pragueiro:</label>
+                    <input type="text" id="nomePragueiro" placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="talhao">Talhão:</label>
+                    <select id="talhao">
+                        <option value="P2-Regenerativo">P2-Regenerativo</option>
+                        <option value="P3-A-Regenerativo">P3-A-Regenerativo</option>
+                        <option value="P3-B-Regenerativo">P3-B-Regenerativo</option>
+                        <option value="P1-A-Milho-Transição">P1-A-Milho-Transição</option>
+                        <option value="P1-B-Milho-Transição">P1-B-Milho-Transição</option>
+                        <option value="S1-Milho-Transição">S1-Milho-Transição</option>
+                        <option value="S2-Milho-Transição">S2-Milho-Transição</option>
+                        <option value="S2-Soja-Transição">S2-Soja-Transição</option>
+                        <option value="S3-Soja-Transição">S3-Soja-Transição</option>
+                        <option value="S4-A-Soja-Transição">S4-A-Soja-Transição</option>
+                        <option value="S4-B-Soja-Transição">S4-B-Soja-Transição</option>
+                        <option value="S5-Milho-Transição">S5-Milho-Transição</option>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="cultura">Cultura:</label>
+                    <select id="cultura">
+                        <option value="soja">Soja</option>
+                        <option value="milho">Milho</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stagio">Estágio da cultura</label>
+                    <input type="text" id="estagio" placeholder="Digite o estágio">
+                </div>
+              <div class="form-group">
+                    <label for="navaliacao">Número da Avaliação</label>
+                    <input type="text" id="navaliacao" placeholder="Digite o numero da avaliação">
+                </div>
+                 <div class="form-group">
+                    <label for="periodo">Período avaliação</label>
+                    <input type="text" id="periodo" placeholder="Digite o período da avaliação">
+                </div>
+                
+               <div class="form-group">
+                    <label for="transecto">Transecto:</label>
+                    <select id="transecto">
+                        <option value=" 1"> 1</option>
+                        <option value=" 2"> 2</option>
+                        <option value="3"> 3</option>
+                        <option value="4"> 4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nplaca">Número da Placa/Ponto:</label>
+                    <select id="nplaca">
+                        <option value=" 1"> 1</option>
+                        <option value=" 2"> 2</option>
+                        <option value=" 3"> 3</option>
+                        <option value=" 4"> 4</option>
+                        <option value=" 5"> 5</option>
+                        <option value="6"> 6</option>
+                    </select>
+                </div>
+                    <div class="form-group">
+                    <label for="ovo">Ovo:</label>
+                    <div class="button-group">
+                        <button type="button" id="OvoAnterior">Anterior</button>
+                        <input type="number" id="numeroOvo" value="1" readonly>
+                        <button type="button" id="OvoSeguinte">Seguinte</button>
+                    </div>
+                </div>
+                     <div class="form-group">
+                    <label for="condicao">Condição:</label>
+                    <select id="condicao">
+                        <option value="intacto">Intacto</option>
+                        <option value="Parasitado">Parasitado</option>
+                        <option value="Predado">Predado</option>
+                        <option value="Eclodido">Eclodido</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações:</label>
+                    <textarea id="observacoes" placeholder="Detalhes sobre a condição do ovo"></textarea>
+                </div>
+                <button type="button" id="adicionar">Adicionar</button>
+            </form>
+            <button id="baixarExcel">Baixar Excel</button>
+        </div>
+        <div class="visualizacao-dados">
+            <h2>Dados Registrados</h2>
+            <table>
+                 <thead>
+                    <tr>
+                        <th>Talhão</th>
+                        <th>Cultura</th>
+                        <th>Planta</th>
+                        <th>Pragueiro</th>
+                        <th>Estágio</th>
+                       <th>Número Avaliação</th>
+                        <th>Periodo</th>
+                        <th>Transecto</th>
+                        <th>Número Ponto</th>
+                        <th>Condição</th>
+                        <th>Observações</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaDados"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="./xlsx.full.min.js"></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const ovoInput = document.getElementById('numeroOvo');
+    const ovoAnteriorBtn = document.getElementById('OvoAnterior');
+    const ovoSeguinteBtn = document.getElementById('OvoSeguinte');
+    const adicionarBtn = document.getElementById('adicionar');
+    const tabelaDados = document.getElementById('tabelaDados');
+    const baixarExcelBtn = document.getElementById('baixarExcel');
+
+    let numeroOvo = 1;
+    let dados = [];
+
+    /* ===== CONTROLE DO CONTADOR DE OVOS ===== */
+    ovoAnteriorBtn.addEventListener('click', () => {
+        if (numeroOvo > 1) {
+            numeroOvo--;
+            ovoInput.value = numeroOvo;
+        }
+    });
+
+    ovoSeguinteBtn.addEventListener('click', () => {
+        numeroOvo++;
+        ovoInput.value = numeroOvo;
+    });
+
+    /* ===== ADICIONAR REGISTRO ===== */
+    adicionarBtn.addEventListener('click', () => {
+
+        const registro = {
+            Pragueiro: document.getElementById('nomePragueiro').value.trim(),
+            Talhão: document.getElementById('talhao').value,
+            Cultura: document.getElementById('cultura').value,
+            Estágio: document.getElementById('estagio').value.trim(),
+            NumeroAvaliacao: document.getElementById('navaliacao').value.trim(),
+            Periodo: document.getElementById('periodo').value.trim(),
+            Transecto: document.getElementById('transecto').value,
+            NumeroPonto: document.getElementById('nplaca').value,
+            Ovo: numeroOvo,
+            Condição: document.getElementById('condicao').value,
+            Observações: document.getElementById('observacoes').value.trim(),
+            DataHora: new Date().toLocaleString('pt-BR')
+        };
+
+        if (!registro.Pragueiro || !registro.Estágio || !registro.NumeroAvaliacao) {
+            alert('Preencha os campos obrigatórios.');
+            return;
+        }
+
+        dados.push(registro);
+        salvarDados();
+        atualizarTabela();
+        limparObservacoes();
+    });
+
+    /* ===== ATUALIZA TABELA ===== */
+    function atualizarTabela() {
+        tabelaDados.innerHTML = '';
+
+        dados.forEach((item, index) => {
+            const tr = document.createElement('tr');
+
+            Object.values(item).forEach(valor => {
+                const td = document.createElement('td');
+                td.textContent = valor;
+                tr.appendChild(td);
+            });
+
+            const tdAcoes = document.createElement('td');
+            const btnExcluir = document.createElement('button');
+            btnExcluir.textContent = 'Excluir';
+            btnExcluir.onclick = () => {
+                dados.splice(index, 1);
+                salvarDados();
+                atualizarTabela();
+            };
+
+            tdAcoes.appendChild(btnExcluir);
+            tr.appendChild(tdAcoes);
+
+            tabelaDados.appendChild(tr);
+        });
+    }
+
+    /* ===== LOCAL STORAGE ===== */
+    function salvarDados() {
+        localStorage.setItem('dadosPragas', JSON.stringify(dados));
+    }
+
+    function carregarDados() {
+        const dadosSalvos = localStorage.getItem('dadosPragas');
+        if (dadosSalvos) {
+            dados = JSON.parse(dadosSalvos);
+            atualizarTabela();
+        }
+    }
+
+    /* ===== EXPORTAR EXCEL ===== */
+    baixarExcelBtn.addEventListener('click', () => {
+        if (dados.length === 0) {
+            alert('Não há dados para exportar.');
+            return;
+        }
+
+        const ws = XLSX.utils.json_to_sheet(dados);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Registro_Praga');
+        XLSX.writeFile(wb, 'registro_pragas.xlsx');
+    });
+
+    function limparObservacoes() {
+        document.getElementById('observacoes').value = '';
+    }
+
+    carregarDados();
+
+    /* ===== SERVICE WORKER ===== */
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(reg => console.log('Service Worker registrado'))
+            .catch(err => console.error('Erro no SW:', err));
+    }
+});
+
+
+</script>
+</body>
+</html>
