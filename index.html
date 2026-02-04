@@ -105,11 +105,13 @@
             <button id="baixarExcel">BAIXAR EXCEL</button>
         </div>
 
-        <div class="visualizacao-dados">
+    <div class="visualizacao-dados">
             <table>
                 <thead>
                     <tr>
-                        <th>Talhão</th>
+                        <th>Avaliação</th>
+                        <th>Transecto</th>
+                        <th>Ponto</th>
                         <th>Ovo Nº</th>
                         <th>Condição</th>
                         <th>Ação</th>
@@ -157,59 +159,34 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAdicionar.onclick = () => {
         const agora = new Date();
         const registro = {
-            Talhao: fTalhao.value,
-            Cultura: fCultura.value,
-            Ovo: inputNumeroOvo.value,
-            Pragueiro: fNome.value,
-            Estagio: fEstagio.value,
             Avaliacao: fAvaliacao.value,
-            Periodo: fPeriodo.value,
             Transecto: fTransecto.value,
             Ponto: fPonto.value,
+            Ovo: inputNumeroOvo.value,
             Condicao: fCondicao.value,
+            // Dados ocultos na tabela mas presentes no Excel:
+            Pragueiro: fNome.value,
+            Talhao: fTalhao.value,
+            Cultura: fCultura.value,
+            Estagio: fEstagio.value,
+            Periodo: fPeriodo.value,
             Obs: fObs.value,
             Data: agora.toLocaleDateString('pt-BR'),
-            Hora: agora.toLocaleTimeString('pt-BR'),
-            Lat: '', Lon: ''
+            Hora: agora.toLocaleTimeString('pt-BR')
         };
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                pos => {
-                    registro.Lat = pos.coords.latitude.toFixed(6);
-                    registro.Lon = pos.coords.longitude.toFixed(6);
-                    salvar(registro);
-                },
-                () => { salvar(registro); }
-            );
-        } else {
-            salvar(registro);
-        }
-    };
-
-    function salvar(registro) {
         dadosPragas.push(registro);
-        localStorage.setItem('dados_pragas_v2', JSON.stringify(dadosPragas));
+        localStorage.setItem('dados_pragas_final', JSON.stringify(dadosPragas));
         
-        // Atualiza interface sem alertas
-        const tr = document.createElement('tr');
-        const idx = dadosPragas.length - 1;
-        tr.innerHTML = `
-            <td>${registro.Talhao}</td>
-            <td>${registro.Ovo}</td>
-            <td>${registro.Condicao}</td>
-            <td><button class="btn-excluir" onclick="excluir(${idx})">X</button></td>
-        `;
-        tabelaDados.appendChild(tr);
+        renderTabela();
 
-        // Prepara próximo registro
         fObs.value = '';
         inputNumeroOvo.value = parseInt(inputNumeroOvo.value) + 1;
-    }
+    };
 
     window.excluir = (index) => {
         dadosPragas.splice(index, 1);
-        localStorage.setItem('dados_pragas_v2', JSON.stringify(dadosPragas));
+        localStorage.setItem('dados_pragas_final', JSON.stringify(dadosPragas));
         renderTabela();
     };
 
@@ -217,7 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
         tabelaDados.innerHTML = '';
         dadosPragas.forEach((r, i) => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${r.Talhao}</td><td>${r.Ovo}</td><td>${r.Condicao}</td><td><button class="btn-excluir" onclick="excluir(${i})">X</button></td>`;
+            tr.innerHTML = `
+                <td>${r.Avaliacao}</td>
+                <td>${r.Transecto}</td>
+                <td>${r.Ponto}</td>
+                <td>${r.Ovo}</td>
+                <td>${r.Condicao}</td>
+                <td><button class="btn-excluir" onclick="excluir(${i})">X</button></td>
+            `;
             tabelaDados.appendChild(tr);
         });
     }
@@ -227,14 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const ws = XLSX.utils.json_to_sheet(dadosPragas);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Dados');
-        XLSX.writeFile(wb, 'registros_campo.xlsx');
+        XLSX.writeFile(wb, 'registros_pragas.xlsx');
     };
 
-    // Carregar dados iniciais
-    const salvos = localStorage.getItem('dados_pragas_v2');
-    if (salvos) { dadosPragas = JSON.parse(salvos); renderTabela(); }
+    const salvos = localStorage.getItem('dados_pragas_final');
+    if (salvos) { 
+        dadosPragas = JSON.parse(salvos); 
+        renderTabela(); 
+    }
 });
 </script>
 </body>
-
 </html>
