@@ -4,106 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Pragas</title>
-    <link rel="manifest" href="manifest.json">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding-top: 60px;
-        }
-
-        header {
-            width: 100%;
-            height: 60px;
-            background-color: #003399;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-
-        .main-content {
-            margin-top: 20px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .app-container {
-            max-width: 400px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input, textarea, select, button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #003399;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background: #0055cc;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .visualizacao-dados {
-            margin-top: 20px;
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #003399;
-            color: white;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding-top: 60px; }
+        header { width: 100%; height: 60px; background-color: #003399; color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; z-index: 10; }
+        .main-content { margin-top: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .app-container { max-width: 400px; width: 100%; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, textarea, select, button { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #003399; color: #fff; border: none; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        button:hover { background: #0055cc; }
+        .button-group { display: flex; gap: 5px; justify-content: space-between; }
+        .visualizacao-dados { margin-top: 20px; width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; min-width: 600px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 13px; }
+        th { background-color: #003399; color: white; }
+        #baixarExcel { background-color: #003399; margin-top: 20px; }
+        .btn-excluir { background: #003399; padding: 5px; margin: 0; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -116,7 +34,7 @@
             <form id="pragaForm">
                 <div class="form-group">
                     <label for="nomePragueiro">Nome do Pragueiro:</label>
-                    <input type="text" id="nomePragueiro" placeholder="Digite seu nome">
+                    <input type="text" id="nomePragueiro" placeholder="Nome">
                 </div>
                 <div class="form-group">
                     <label for="talhao">Talhão:</label>
@@ -135,58 +53,52 @@
                         <option value="S5-Milho-Transição">S5-Milho-Transição</option>
                     </select>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label for="cultura">Cultura:</label>
                     <select id="cultura">
-                        <option value="soja">Soja</option>
-                        <option value="milho">Milho</option>
+                        <option value="Soja">Soja</option>
+                        <option value="Milho">Milho</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="stagio">Estágio da cultura</label>
-                    <input type="text" id="estagio" placeholder="Digite o estágio">
+                    <label for="estagio">Estágio da cultura</label>
+                    <input type="text" id="estagio" placeholder="Ex: V3">
                 </div>
-              <div class="form-group">
-                    <label for="navaliacao">Número da Avaliação</label>
-                    <input type="text" id="navaliacao" placeholder="Digite o numero da avaliação">
+                <div class="form-group">
+                    <label for="navaliacao">Nº Avaliação</label>
+                    <input type="text" id="navaliacao" placeholder="Ex: 1">
                 </div>
-                 <div class="form-group">
-                    <label for="periodo">Período avaliação</label>
-                    <input type="text" id="periodo" placeholder="Digite o período da avaliação">
+                <div class="form-group">
+                    <label for="periodo">Período</label>
+                    <input type="text" id="periodo" placeholder="Ex: Manhã">
                 </div>
-                
-               <div class="form-group">
+                <div class="form-group">
                     <label for="transecto">Transecto:</label>
                     <select id="transecto">
-                        <option value=" 1"> 1</option>
-                        <option value=" 2"> 2</option>
-                        <option value="3"> 3</option>
-                        <option value="4"> 4</option>
+                        <option value="1">1</option><option value="2">2</option>
+                        <option value="3">3</option><option value="4">4</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="nplaca">Número da Placa/Ponto:</label>
+                    <label for="nplaca">Ponto:</label>
                     <select id="nplaca">
-                        <option value=" 1"> 1</option>
-                        <option value=" 2"> 2</option>
-                        <option value=" 3"> 3</option>
-                        <option value=" 4"> 4</option>
-                        <option value=" 5"> 5</option>
-                        <option value="6"> 6</option>
+                        <option value="1">1</option><option value="2">2</option>
+                        <option value="3">3</option><option value="4">4</option>
+                        <option value="5">5</option><option value="6">6</option>
                     </select>
                 </div>
-                    <div class="form-group">
-                    <label for="ovo">Ovo:</label>
+                <div class="form-group">
+                    <label for="numeroOvo">Ovo:</label>
                     <div class="button-group">
                         <button type="button" id="OvoAnterior">Anterior</button>
                         <input type="number" id="numeroOvo" value="1" readonly>
-                        <button type="button" id="OvoSeguinte">Seguinte</button>
+                        <button type="button" id="OvoSeguinte">Próximo</button>
                     </div>
                 </div>
-                     <div class="form-group">
+                <div class="form-group">
                     <label for="condicao">Condição:</label>
                     <select id="condicao">
-                        <option value="intacto">Intacto</option>
+                        <option value="Intacto">Intacto</option>
                         <option value="Parasitado">Parasitado</option>
                         <option value="Predado">Predado</option>
                         <option value="Eclodido">Eclodido</option>
@@ -194,165 +106,142 @@
                 </div>
                 <div class="form-group">
                     <label for="observacoes">Observações:</label>
-                    <textarea id="observacoes" placeholder="Detalhes sobre a condição do ovo"></textarea>
+                    <textarea id="observacoes" placeholder="Opcional"></textarea>
                 </div>
-                <button type="button" id="adicionar">Adicionar</button>
+                <button type="button" id="adicionar">ADICIONAR</button>
             </form>
-            <button id="baixarExcel">Baixar Excel</button>
+            <button id="baixarExcel">BAIXAR EXCEL</button>
         </div>
+
         <div class="visualizacao-dados">
-            <h2>Dados Registrados</h2>
             <table>
-                 <thead>
+                <thead>
                     <tr>
                         <th>Talhão</th>
-                        <th>Cultura</th>
-                        <th>Planta</th>
-                        <th>Pragueiro</th>
-                        <th>Estágio</th>
-                       <th>Número Avaliação</th>
-                        <th>Periodo</th>
-                        <th>Transecto</th>
-                        <th>Número Ponto</th>
+                        <th>Ovo Nº</th>
                         <th>Condição</th>
-                        <th>Observações</th>
-                        <th>Ações</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
-
                 <tbody id="tabelaDados"></tbody>
             </table>
         </div>
     </div>
 
-    <script src="./xlsx.full.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
-    const ovoInput = document.getElementById('numeroOvo');
-    const ovoAnteriorBtn = document.getElementById('OvoAnterior');
-    const ovoSeguinteBtn = document.getElementById('OvoSeguinte');
-    const adicionarBtn = document.getElementById('adicionar');
+    const btnAdicionar = document.getElementById('adicionar');
+    const btnBaixarExcel = document.getElementById('baixarExcel');
+    const btnOvoAnterior = document.getElementById('OvoAnterior');
+    const btnOvoSeguinte = document.getElementById('OvoSeguinte');
+    const inputNumeroOvo = document.getElementById('numeroOvo');
     const tabelaDados = document.getElementById('tabelaDados');
-    const baixarExcelBtn = document.getElementById('baixarExcel');
 
-    let numeroOvo = 1;
-    let dados = [];
+    const fNome = document.getElementById('nomePragueiro');
+    const fTalhao = document.getElementById('talhao');
+    const fCultura = document.getElementById('cultura');
+    const fEstagio = document.getElementById('estagio');
+    const fAvaliacao = document.getElementById('navaliacao');
+    const fPeriodo = document.getElementById('periodo');
+    const fTransecto = document.getElementById('transecto');
+    const fPonto = document.getElementById('nplaca');
+    const fCondicao = document.getElementById('condicao');
+    const fObs = document.getElementById('observacoes');
 
-    /* ===== CONTROLE DO CONTADOR DE OVOS ===== */
-    ovoAnteriorBtn.addEventListener('click', () => {
-        if (numeroOvo > 1) {
-            numeroOvo--;
-            ovoInput.value = numeroOvo;
-        }
-    });
+    let dadosPragas = [];
 
-    ovoSeguinteBtn.addEventListener('click', () => {
-        numeroOvo++;
-        ovoInput.value = numeroOvo;
-    });
+    btnOvoAnterior.onclick = () => {
+        let atual = parseInt(inputNumeroOvo.value);
+        if (atual > 1) inputNumeroOvo.value = atual - 1;
+    };
 
-    /* ===== ADICIONAR REGISTRO ===== */
-    adicionarBtn.addEventListener('click', () => {
+    btnOvoSeguinte.onclick = () => {
+        let atual = parseInt(inputNumeroOvo.value);
+        inputNumeroOvo.value = atual + 1;
+    };
 
+    btnAdicionar.onclick = () => {
+        const agora = new Date();
         const registro = {
-            Pragueiro: document.getElementById('nomePragueiro').value.trim(),
-            Talhão: document.getElementById('talhao').value,
-            Cultura: document.getElementById('cultura').value,
-            Estágio: document.getElementById('estagio').value.trim(),
-            NumeroAvaliacao: document.getElementById('navaliacao').value.trim(),
-            Periodo: document.getElementById('periodo').value.trim(),
-            Transecto: document.getElementById('transecto').value,
-            NumeroPonto: document.getElementById('nplaca').value,
-            Ovo: numeroOvo,
-            Condição: document.getElementById('condicao').value,
-            Observações: document.getElementById('observacoes').value.trim(),
-            DataHora: new Date().toLocaleString('pt-BR')
+            Talhao: fTalhao.value,
+            Cultura: fCultura.value,
+            Ovo: inputNumeroOvo.value,
+            Pragueiro: fNome.value,
+            Estagio: fEstagio.value,
+            Avaliacao: fAvaliacao.value,
+            Periodo: fPeriodo.value,
+            Transecto: fTransecto.value,
+            Ponto: fPonto.value,
+            Condicao: fCondicao.value,
+            Obs: fObs.value,
+            Data: agora.toLocaleDateString('pt-BR'),
+            Hora: agora.toLocaleTimeString('pt-BR'),
+            Lat: '', Lon: ''
         };
 
-        if (!registro.Pragueiro || !registro.Estágio || !registro.NumeroAvaliacao) {
-            alert('Preencha os campos obrigatórios.');
-            return;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    registro.Lat = pos.coords.latitude.toFixed(6);
+                    registro.Lon = pos.coords.longitude.toFixed(6);
+                    salvar(registro);
+                },
+                () => { salvar(registro); }
+            );
+        } else {
+            salvar(registro);
         }
+    };
 
-        dados.push(registro);
-        salvarDados();
-        atualizarTabela();
-        limparObservacoes();
-    });
+    function salvar(registro) {
+        dadosPragas.push(registro);
+        localStorage.setItem('dados_pragas_v2', JSON.stringify(dadosPragas));
+        
+        // Atualiza interface sem alertas
+        const tr = document.createElement('tr');
+        const idx = dadosPragas.length - 1;
+        tr.innerHTML = `
+            <td>${registro.Talhao}</td>
+            <td>${registro.Ovo}</td>
+            <td>${registro.Condicao}</td>
+            <td><button class="btn-excluir" onclick="excluir(${idx})">X</button></td>
+        `;
+        tabelaDados.appendChild(tr);
 
-    /* ===== ATUALIZA TABELA ===== */
-    function atualizarTabela() {
+        // Prepara próximo registro
+        fObs.value = '';
+        inputNumeroOvo.value = parseInt(inputNumeroOvo.value) + 1;
+    }
+
+    window.excluir = (index) => {
+        dadosPragas.splice(index, 1);
+        localStorage.setItem('dados_pragas_v2', JSON.stringify(dadosPragas));
+        renderTabela();
+    };
+
+    function renderTabela() {
         tabelaDados.innerHTML = '';
-
-        dados.forEach((item, index) => {
+        dadosPragas.forEach((r, i) => {
             const tr = document.createElement('tr');
-
-            Object.values(item).forEach(valor => {
-                const td = document.createElement('td');
-                td.textContent = valor;
-                tr.appendChild(td);
-            });
-
-            const tdAcoes = document.createElement('td');
-            const btnExcluir = document.createElement('button');
-            btnExcluir.textContent = 'Excluir';
-            btnExcluir.onclick = () => {
-                dados.splice(index, 1);
-                salvarDados();
-                atualizarTabela();
-            };
-
-            tdAcoes.appendChild(btnExcluir);
-            tr.appendChild(tdAcoes);
-
+            tr.innerHTML = `<td>${r.Talhao}</td><td>${r.Ovo}</td><td>${r.Condicao}</td><td><button class="btn-excluir" onclick="excluir(${i})">X</button></td>`;
             tabelaDados.appendChild(tr);
         });
     }
 
-    /* ===== LOCAL STORAGE ===== */
-    function salvarDados() {
-        localStorage.setItem('dadosPragas', JSON.stringify(dados));
-    }
-
-    function carregarDados() {
-        const dadosSalvos = localStorage.getItem('dadosPragas');
-        if (dadosSalvos) {
-            dados = JSON.parse(dadosSalvos);
-            atualizarTabela();
-        }
-    }
-
-    /* ===== EXPORTAR EXCEL ===== */
-    baixarExcelBtn.addEventListener('click', () => {
-        if (dados.length === 0) {
-            alert('Não há dados para exportar.');
-            return;
-        }
-
-        const ws = XLSX.utils.json_to_sheet(dados);
+    btnBaixarExcel.onclick = () => {
+        if (dadosPragas.length === 0) return;
+        const ws = XLSX.utils.json_to_sheet(dadosPragas);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Registro_Praga');
-        XLSX.writeFile(wb, 'registro_pragas.xlsx');
-    });
+        XLSX.utils.book_append_sheet(wb, ws, 'Dados');
+        XLSX.writeFile(wb, 'registros_campo.xlsx');
+    };
 
-    function limparObservacoes() {
-        document.getElementById('observacoes').value = '';
-    }
-
-    carregarDados();
-
-    /* ===== SERVICE WORKER ===== */
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js')
-            .then(reg => console.log('Service Worker registrado'))
-            .catch(err => console.error('Erro no SW:', err));
-    }
+    // Carregar dados iniciais
+    const salvos = localStorage.getItem('dados_pragas_v2');
+    if (salvos) { dadosPragas = JSON.parse(salvos); renderTabela(); }
 });
-
-
 </script>
 </body>
 </html>
